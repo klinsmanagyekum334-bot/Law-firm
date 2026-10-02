@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Testimonials | Prince K.N Okyere Law Firm{% endblock %}
+
+{#
+  HOW TO USE THIS PAGE
+  Every entry below is SAMPLE TEXT so you can see how the page will look.
+  Replace each one with a real client's words (with their permission) and
+  change  "sample": True  to  "sample": False  (or delete the line).
+  Entries marked sample show a "Sample" tag on the page.
+#}
+{% set featured = {
+  "quote": "I came in with a stack of papers and a lot of fear. Within the first meeting, someone had actually sat down and read all of it. He told me what was strong, what was weak, and what could be done. For the first time in months I could sleep. Whatever happens next, I know where I stand.",
+  "name": "Client name here", "case": "Land dispute, Kumasi", "sample": True } %}
+
+{% set reviews = [
+ {"quote":"They explained everything in plain English and never made me feel foolish for asking. When the matter was settled I understood every step that had led there.","name":"Client name","case":"Family Law","sample":True},
+ {"quote":"My brother was picked up late at night. We called, and someone answered and told us exactly what to do and what not to do. That call mattered more than anything.","name":"Client name","case":"Criminal Law","sample":True},
+ {"quote":"I was about to pay for a plot when they suggested a search at the Lands Commission first. It showed the land was already sold to another person. That one step saved me a lot of money.","name":"Client name","case":"Real Estate Law","sample":True},
+ {"quote":"Setting up our company and writing the shareholder agreement was far less stressful than I expected. Everything was explained before we signed anything.","name":"Client name","case":"Corporate Law","sample":True},
+ {"quote":"After my accident I did not know where to begin. They helped me collect my records and handled the insurers while I recovered.","name":"Client name","case":"Personal Injury","sample":True},
+ {"quote":"They told me honestly that mediation would be better than court, and they were right. We settled as a family, and we are still speaking to each other.","name":"Client name","case":"Family dispute settlement","sample":True},
+ {"quote":"Straight talk, fair fees and no pressure. I have already sent two friends to the office.","name":"Client name","case":"General advice","sample":True}
+] %}
+
+{% block content %}
+
+<section class="page-banner" style="--bg: url('{{ url_for('static', filename='img/image3.jpg') }}')">
+    <div class="page-banner-inner">
+        <span class="eyebrow">TESTIMONIALS</span>
+        <h1>What our clients say about working with us</h1>
+    </div>
+</section>
+
+<section class="t-intro">
+    <p>A law firm can say a lot about itself, but the people who have sat in our office are better placed to tell you what it is like. Here are some of their words about how we listened, how we explained things and how their matters ended.</p>
+    <p class="small-print">Client details are shared with permission, and names may be shortened to protect privacy.</p>
+</section>
+
+<section class="t-featured">
+    <div class="t-featured-box">
+        {% if featured.sample %}<span class="sample-flag">Sample</span>{% endif %}
+        <svg class="qmark" viewBox="0 0 24 24"><path d="M3 21c0-6 2-10 7-13l1 2c-3 2-4 4-4 6h4v5H3Zm11 0c0-6 2-10 7-13l1 2c-3 2-4 4-4 6h4v5h-8Z"/></svg>
+        <blockquote>{{ featured.quote }}</blockquote>
+        <p class="who"><b>{{ featured.name }}</b> &middot; {{ featured.case }}</p>
+    </div>
+</section>
+
+<section class="t-grid-wrap">
+    <div class="a-values-head">
+        <span class="eyebrow small">IN THEIR WORDS</span>
+        <h2 class="sec-h2">Clients from every part of our practice</h2>
+    </div>
+    <div class="t-grid">
+        {% for r in reviews %}
+        <figure class="t-card">
+            {% if r.sample %}<span class="sample-flag">Sample</span>{% endif %}
+            <blockquote>{{ r.quote }}</blockquote>
+            <figcaption><b>{{ r.name }}</b><span>{{ r.case }}</span></figcaption>
+        </figure>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="t-themes">
+    <div class="a-values-head">
+        <span class="eyebrow small">WHAT COMES UP AGAIN AND AGAIN</span>
+        <h2 class="sec-h2">The things people notice most</h2>
+    </div>
+    <div class="a-values-grid">
+        <div><span class="num">1</span><h3>"They listened first"</h3><p>People tell us they were allowed to finish their story before any advice was given.</p></div>
+        <div><span class="num">2</span><h3>"Nothing was hidden"</h3><p>Fees, timelines and risks were explained at the start, not after the work was done.</p></div>
+        <div><span class="num">3</span><h3>"I was kept updated"</h3><p>Clients say they never had to chase us for news about their case.</p></div>
+        <div><span class="num">4</span><h3>"It felt personal"</h3><p>Your matter is handled by people who know your name, not passed from desk to desk.</p></div>
+    </div>
+</section>
+
+<section class="a-cta">
+    <h2>Tell us about your experience</h2>
+    <p>Have we worked together before? We would be glad to hear how it went, good or bad. Send us a short note and, with your permission, we may share it here.</p>
+    <div class="visit-buttons">
+        <a class="btn btn-gold" href="mailto:p6301621@gmail.com?subject=My%20experience%20with%20the%20firm">Share Your Experience <svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-outline" href="tel:+233538274804">Call +233 53 827 4804</a>
+    </div>
+</section>
+{% endblock %}

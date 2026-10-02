@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Home | Prince K.N Okyere Law Firm{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-img"><img src="{{ url_for('static', filename='img/image1.jpg') }}" alt="Prince N.K Oyere, Barrister-at-Law">
+        <div class="nameplate">
+            <strong>Prince N.K Oyere</strong>
+            <span>Barrister-at-Law &amp; Solicitor</span>
+            <small>Supreme Court of Ghana</small>
+        </div>
+    </div>
+    <div class="hero-content">
+        <span class="eyebrow">YOUR RIGHTS. OUR PRIORITY.</span>
+        <div class="hero-head">
+            <h1>Trusted Legal<br>Support When<br>It Matters Most</h1>
+            <img class="hero-badge" src="{{ url_for('static', filename='img/image6.jpg') }}" alt="Prince K.N Okyere Law Firm">
+        </div>
+        <p>At Prince K.N Okyere Law Firm, we provide professional, reliable and results-driven legal services for individuals, families and businesses. Your case is not just a file &mdash; it's your future.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn btn-gold">Book a Consultation <svg class="ic"><use href="#i-arrow"/></svg></a>
+            <a href="#practice" class="btn btn-outline">Our Practice Areas</a>
+        </div>
+    </div>
+</section>
+
+<section class="practice" id="practice">
+    <div class="practice-title">
+        <h2>Our Practice Areas</h2>
+        <p>We offer a wide range of legal services tailored to meet your needs.</p>
+        <span class="gold-line"></span>
+    </div>
+    <div class="practice-cards">
+        <div class="card"><svg class="ic"><use href="#i-scale"/></svg><h3>Criminal Law</h3><p>Defending your rights in every step.</p></div>
+        <div class="card"><svg class="ic"><use href="#i-users"/></svg><h3>Family Law</h3><p>Support for what matters most.</p></div>
+        <div class="card"><svg class="ic"><use href="#i-building"/></svg><h3>Corporate Law</h3><p>Helping businesses grow and stay protected.</p></div>
+        <div class="card"><svg class="ic"><use href="#i-house"/></svg><h3>Real Estate Law</h3><p>Safe and secure property transactions.</p></div>
+        <div class="card"><svg class="ic"><use href="#i-file"/></svg><h3>Personal Injury</h3><p>Justice for your recovery.</p></div>
+    </div>
+</section>
+
+<section class="about">
+    <div class="about-photo"><img src="{{ url_for('static', filename='img/image2.jpg') }}" alt="Experienced lawyer"></div>
+    <div class="about-text">
+        <span class="eyebrow small">ABOUT US</span>
+        <h2>Experienced Lawyers.<br>Client Focused.</h2>
+        <p>Prince K.N Okyere Law Firm was founded with a simple mission: to provide high-quality legal services with integrity, compassion and a commitment to justice. Our team of skilled lawyers brings years of experience across multiple areas of law, ensuring that you receive the best possible representation.</p>
+        <a href="{{ url_for('about') }}" class="btn btn-gold btn-lg">Visit Our About Page <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="stats" style="--bg: url('{{ url_for('static', filename='img/image5.jpg') }}')">
+        <div class="stat"><svg class="ic"><use href="#i-users"/></svg><div><b>500+</b><span>Happy Clients</span></div></div>
+        <div class="stat"><svg class="ic"><use href="#i-scale"/></svg><div><b>10+</b><span>Years of Experience</span></div></div>
+        <div class="stat"><svg class="ic"><use href="#i-shield"/></svg><div><b>98%</b><span>Success Rate</span></div></div>
+        <p class="stats-foot">YOUR CASE &nbsp;&bull;&nbsp; OUR COMMITMENT</p>
+    </div>
+</section>
+
+<!-- ============ ABOUT PROMPT ============ -->
+<section class="about-prompt">
+    <div>
+        <h2>Who are we, and why do clients stay with us?</h2>
+        <p>Read our full story, meet the lawyer who leads the firm and see how we work with every client.</p>
+    </div>
+    <a href="{{ url_for('about') }}" class="btn btn-gold btn-lg">About Us <svg class="ic"><use href="#i-arrow"/></svg></a>
+</section>
+
+<!-- ============ WHY TRUST US ============ -->
+<section class="trust" id="trust">
+    <div class="a-values-head">
+        <span class="eyebrow small">WHY YOU CAN TRUST US</span>
+        <h2 class="sec-h2">We are a real law office, and you can check</h2>
+        <p class="trust-lead">Choosing a lawyer is a decision about your money, your family or your freedom. These are the reasons we hope you will trust us with it.</p>
+    </div>
+    <div class="trust-grid">
+        <div><svg class="ic"><use href="#i-scale"/></svg><h3>A qualified, licensed lawyer</h3><p>Our lawyer is a Barrister-at-Law and Solicitor of the Supreme Court of Ghana. Lawyers in Ghana are regulated by the General Legal Council, and you are welcome to confirm any lawyer's enrolment with them.</p></div>
+        <div><svg class="ic"><use href="#i-pin"/></svg><h3>An office you can visit</h3><p>We are on the 3rd floor of the Ministries Building in Adum, close to the Kumasi High Court. You can walk in, sit down and meet the people handling your case.</p></div>
+        <div><svg class="ic"><use href="#i-shield"/></svg><h3>Your information stays private</h3><p>Everything you tell us is confidential and protected by the lawyer's duty of confidentiality. Read how we protect it on our <a href="{{ url_for('privacy') }}">privacy page</a>.</p></div>
+        <div><svg class="ic"><use href="#i-file"/></svg><h3>Honest about cost and outcome</h3><p>We talk about fees and likely timelines at the start, and we will not promise a result we cannot control. The first consultation is free.</p></div>
+    </div>
+</section>
+
+<!-- ============ WHAT WE HANDLE ============ -->
+<section class="handle" id="services">
+    <figure class="handle-photo">
+        <img src="{{ url_for('static', filename='img/image3.jpg') }}" alt="A judge's gavel resting on a law book">
+        <figcaption>Whether it starts at a police station, a family home or a boardroom, we treat it with the same care.</figcaption>
+    </figure>
+    <div class="handle-list">
+        <span class="eyebrow small">WHAT WE HANDLE</span>
+        <h2>The problems people actually bring to a lawyer</h2>
+        <dl>
+            <dt>Criminal Law</dt>
+            <dd>Arrests, police bail, and representation in the District, Circuit and High Courts. If someone you love has been picked up, call us first and we will go to the station with you.</dd>
+            <dt>Family Law</dt>
+            <dd>Divorce, child custody and maintenance under the Children's Act, 1998 (Act 560), customary marriage registration, wills, and what happens to an estate when someone dies without one.</dd>
+            <dt>Corporate Law</dt>
+            <dd>Registering a company under the Companies Act, 2019 (Act 992), drafting contracts and shareholder agreements, and sorting out staff matters under the Labour Act, 2003 (Act 651).</dd>
+            <dt>Real Estate Law</dt>
+            <dd>Land searches at the Lands Commission, checking documents before you pay, tenancy disputes, and site plans. The Land Act, 2020 (Act 1036) now makes the use of land guards a crime, and we will act on it if your land is being threatened.</dd>
+            <dt>Personal Injury</dt>
+            <dd>Road accidents, injuries at work and medical negligence. We help you collect evidence and claim the compensation you are owed.</dd>
+        </dl>
+    </div>
+</section>
+
+<!-- ============ KNOW YOUR RIGHTS ============ -->
+<section class="rights" id="rights">
+    <div class="rights-text">
+        <span class="eyebrow small">KNOW YOUR RIGHTS</span>
+        <h2>The 1992 Constitution protects you. Few people read it.</h2>
+        <p>Most of our clients tell us the same thing: "I didn't know I could do that." A few basics worth knowing before you ever need us:</p>
+        <ul class="rights-list">
+            <li><b>If you are arrested,</b> you must be told why, and you must be brought before a court within 48 hours (Article 14).</li>
+            <li><b>You can choose your own lawyer</b> and you are presumed innocent until a court says otherwise (Article 19).</li>
+            <li><b>Before you pay for land,</b> search it at the Lands Commission. Many people lose money to double sales that a simple search would have caught.</li>
+            <li><b>If someone dies without a will,</b> the Intestate Succession Law, 1985 (PNDCL 111) decides how the estate is shared between the spouse, children, parents and extended family.</li>
+        </ul>
+        <p class="small-print">This is general information and not advice on your own case. Every situation is different, so please speak to us.</p>
+    </div>
+    <figure class="rights-photo">
+        <img src="{{ url_for('static', filename='img/image4.jpeg') }}" alt="Copies of the 1992 Constitution of the Republic of Ghana">
+    </figure>
+</section>
+
+<!-- ============ HOW WE WORK ============ -->
+<section class="steps" id="process">
+    <h2>What happens when you call us</h2>
+    <div class="steps-row">
+        <div class="step"><span>1</span><h3>You tell us what happened</h3><p>A short first conversation, by phone or in person. No forms and no legal jargon.</p></div>
+        <div class="step"><span>2</span><h3>We look at your papers</h3><p>Bring whatever you have: agreements, receipts, court notices, site plans, messages.</p></div>
+        <div class="step"><span>3</span><h3>We explain your options</h3><p>You hear what we think can be done, how long it may take and what it will cost, before you decide.</p></div>
+        <div class="step"><span>4</span><h3>We get to work</h3><p>We keep you updated at each stage, in court or out of it, until the matter is settled.</p></div>
+    </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+    <h2>Questions people ask us</h2>
+    <details><summary>Is the first consultation really free?</summary><p>Yes. We would rather you understand your position before spending any money.</p></details>
+    <details><summary>What should I bring to the first meeting?</summary><p>Any document linked to the matter: a court notice, a lease or sale agreement, a police report, your ID. If you don't have anything yet, come anyway.</p></details>
+    <details><summary>Will what I tell you stay private?</summary><p>Yes. What you tell your lawyer is confidential, and we do not share it without your permission.</p></details>
+    <details><summary>Can we settle without going to court?</summary><p>Often, yes. Mediation under the Alternative Dispute Resolution Act, 2010 (Act 798) can save time and money, and we will tell you honestly when it is worth trying.</p></details>
+    <details><summary>How long will my case take?</summary><p>It depends on the court and the type of case. Some matters are settled in weeks, others take longer. We will give you a realistic estimate after reading your papers.</p></details>
+</section>
+
+<!-- ============ VISIT US ============ -->
+<section class="visit" id="visit">
+    <div class="visit-info">
+        <span class="eyebrow small">VISIT US</span>
+        <h2>Come and see us in Adum, Kumasi</h2>
+        <div class="visit-item"><svg class="ic"><use href="#i-pin"/></svg>
+            <p><b>Ministries Building, 3rd Floor</b><br>Behind Commission of Oath, close to the Kumasi High Court.<br>Adum, Kumasi</p></div>
+        <div class="visit-item"><svg class="ic"><use href="#i-file"/></svg>
+            <p><b>Postal address</b><br>P.O. Box 456, Adum, Kumasi<br>Digital address: AE-689-8990</p></div>
+        <div class="visit-item"><svg class="ic"><use href="#i-mail"/></svg>
+            <p><b>Email</b><br><a href="mailto:p6301621@gmail.com">p6301621@gmail.com</a></p></div>
+        <div class="visit-item"><svg class="ic"><use href="#i-phone"/></svg>
+            <p><b>Phone</b><br><a href="tel:+233538274804">+233 53 827 4804</a></p></div>
+    </div>
+    <div class="visit-find">
+        <h3>How to find us</h3>
+        <ol>
+            <li>Come to the Ministries Building in Adum.</li>
+            <li>Look for the Commission of Oath. Our office is behind it.</li>
+            <li>Take the stairs or lift to the 3rd floor.</li>
+        </ol>
+        <p>The Kumasi High Court is close by, so you can easily find us on your way to or from court.</p>
+        <div class="visit-buttons">
+            <a class="btn btn-gold" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Ministries+Building+Adum+Kumasi">Get Directions <svg class="ic"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-outline" href="mailto:p6301621@gmail.com">Send an Email</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}About Us | Prince K.N Okyere Law Firm{% endblock %}
+
+{% block content %}
+
+<!-- ===== Banner ===== -->
+<section class="page-banner" style="--bg: url('{{ url_for('static', filename='img/image5.jpg') }}')">
+    <div class="page-banner-inner">
+        <span class="eyebrow">ABOUT US</span>
+        <h1>A law office in the heart of Adum, built around the people who walk through the door</h1>
+    </div>
+</section>
+
+<!-- ===== Our story ===== -->
+<section class="a-story">
+    <figure class="a-photo">
+        <img src="{{ url_for('static', filename='img/image3.jpg') }}" alt="A wooden gavel on a desk">
+    </figure>
+    <div class="a-text">
+        <span class="eyebrow small">OUR STORY</span>
+        <h2 class="sec-h2">Why we are where we are</h2>
+        <p>Our office is on the third floor of the Ministries Building in Adum, close to the Kumasi High Court. That was a deliberate choice. Most legal problems end up in a courtroom sooner or later, and we wanted to be near the place where our clients' cases are heard.</p>
+        <p>Prince K.N Okyere Law Firm started with a simple idea: people should be able to talk to a lawyer without feeling small. Many of the people who come to see us have never been inside a law office. Some are frightened. Some have been told three different things by three different people. A few are simply embarrassed that they signed something without reading it.</p>
+        <p>None of that bothers us. We would much rather you come early with a half-formed question than late with a big problem. Sitting down with you, reading the papers in your hand and telling you plainly where you stand is the heart of what we do.</p>
+        <p>We act for individuals, families and small and growing businesses. Some clients come once, with one problem. Others have been calling us for years, whenever a new question comes up. Both are welcome.</p>
+    </div>
+</section>
+
+<!-- ===== Values ===== -->
+<section class="a-values">
+    <div class="a-values-head">
+        <span class="eyebrow small">HOW WE TREAT PEOPLE</span>
+        <h2 class="sec-h2">Four promises we try to keep</h2>
+    </div>
+    <div class="a-values-grid">
+        <div><span class="num">1</span><h3>We speak plainly</h3><p>If a word needs a dictionary, we explain it. You should leave every meeting knowing what is happening in your case and what comes next.</p></div>
+        <div><span class="num">2</span><h3>We tell you the truth</h3><p>Not every case is a strong one. If we think you are unlikely to win, or that a settlement is smarter, we will say so, even when it is not what you hoped to hear.</p></div>
+        <div><span class="num">3</span><h3>We keep what you say private</h3><p>Whatever you tell us stays between us. Conversations with your lawyer are confidential, and that is the rule in every meeting we hold.</p></div>
+        <div><span class="num">4</span><h3>We respect your time and money</h3><p>You will hear about fees and likely timelines before we begin. If a matter can be settled without court, we will point that out first.</p></div>
+    </div>
+</section>
+
+<!-- ===== Constitution ===== -->
+<section class="a-constitution">
+    <div class="a-text">
+        <span class="eyebrow small">OUR FOUNDATION</span>
+        <h2 class="sec-h2">Everything starts with the 1992 Constitution</h2>
+        <p>The 1992 Constitution of the Republic of Ghana is the highest law in the country. Every other law, from the Criminal Offences Act to the Land Act, has to sit below it. It is also where your basic rights are written down: your right to personal liberty, to a fair hearing, to be presumed innocent, to choose your own lawyer, and to be treated with dignity.</p>
+        <p>We keep a copy close at hand because so many of our cases come back to it. A person held too long at a police station. A tenant locked out with no notice. A worker dismissed without being heard. In each of these, the first question is simple: what does the law say you are entitled to?</p>
+        <p>Knowing your rights does not make you difficult. It simply means that when you sit across from a police officer, a landlord, an employer or a buyer, you are not guessing.</p>
+    </div>
+    <figure class="a-photo">
+        <img src="{{ url_for('static', filename='img/image4.jpeg') }}" alt="Two copies of the 1992 Constitution of the Republic of Ghana">
+    </figure>
+</section>
+
+<!-- ===== The lawyer ===== -->
+<section class="a-profile">
+    <figure class="a-photo portrait">
+        <img src="{{ url_for('static', filename='img/image1.jpg') }}" alt="Prince N.K Oyere in his chambers">
+    </figure>
+    <div class="a-text">
+        <span class="eyebrow small">MEET THE LAWYER</span>
+        <h2 class="sec-h2">Prince N.K Oyere</h2>
+        <p class="role">Barrister-at-Law &amp; Solicitor of the Supreme Court of Ghana</p>
+        <p>Prince leads the firm and meets every new client himself. He believes a good lawyer is, first of all, a good listener. Before offering an opinion, he wants to understand what happened, who is involved and what you actually want out of the matter, which is not always the same as what you first ask for.</p>
+        <p>In the courtroom, he prepares carefully and keeps arguments clear and to the point. Outside it, he is just as likely to be found on the phone, helping two sides find a sensible way to settle before a dispute becomes a long and expensive one.</p>
+        <p>Like every lawyer enrolled in Ghana, he is bound by the rules of the Ghana Bar Association and the General Legal Council, which means honesty, loyalty to the client and respect for the court are not optional.</p>
+    </div>
+</section>
+
+<!-- ===== Practice areas in detail ===== -->
+<section class="a-areas">
+    <div class="a-values-head">
+        <span class="eyebrow small">WHAT WE DO</span>
+        <h2 class="sec-h2">The kind of work you can bring to us</h2>
+    </div>
+    <div class="a-areas-grid">
+        <article>
+            <svg class="ic"><use href="#i-scale"/></svg>
+            <h3>Criminal Law</h3>
+            <p>An arrest is one of the most frightening things that can happen to a family. We help with police bail, attend the station where we can, and represent clients in the District, Circuit and High Courts. We also help people who have been wrongly accused and need someone to put their side clearly.</p>
+        </article>
+        <article>
+            <svg class="ic"><use href="#i-users"/></svg>
+            <h3>Family Law</h3>
+            <p>Custody, maintenance, divorce, customary marriage registration, wills and inheritance. The Children's Act, 1998 (Act 560) puts the child's welfare first, and we keep that in view. When someone dies without a will, the Intestate Succession Law, 1985 (PNDCL 111) decides how the estate is shared, and we help families through the process calmly.</p>
+        </article>
+        <article>
+            <svg class="ic"><use href="#i-building"/></svg>
+            <h3>Corporate Law</h3>
+            <p>Registering a company under the Companies Act, 2019 (Act 992), writing contracts, drawing up shareholder agreements and advising on staff matters under the Labour Act, 2003 (Act 651). Many small businesses lose money to a single badly written agreement. A short meeting early on is cheaper than a long dispute later.</p>
+        </article>
+        <article>
+            <svg class="ic"><use href="#i-house"/></svg>
+            <h3>Real Estate Law</h3>
+            <p>In Kumasi, land is often a family's biggest asset and its biggest worry. We carry out searches at the Lands Commission, check documents before you pay, deal with tenancy disputes and act against double sales. The Land Act, 2020 (Act 1036) makes the use of land guards a crime, and we will use it where your land is being threatened.</p>
+        </article>
+        <article>
+            <svg class="ic"><use href="#i-file"/></svg>
+            <h3>Personal Injury</h3>
+            <p>Road accidents, injuries at work and medical negligence. Recovery is hard enough without chasing insurers and employers. We help you gather evidence, understand what your claim is worth and pursue what you are owed.</p>
+        </article>
+        <article>
+            <svg class="ic"><use href="#i-pin"/></svg>
+            <h3>Settling Disputes Out of Court</h3>
+            <p>Court is not always the best route. Mediation under the Alternative Dispute Resolution Act, 2010 (Act 798) can be quicker, cheaper and less bitter, especially between relatives, neighbours or business partners. If it is worth trying, we will say so.</p>
+        </article>
+    </div>
+</section>
+
+<!-- ===== Quote band with picture ===== -->
+<section class="a-quote" style="--bg: url('{{ url_for('static', filename='img/image6.jpg') }}')">
+    <blockquote>
+        <p>Law builds a fairer tomorrow.</p>
+        <span>It is the idea behind every file we open.</span>
+    </blockquote>
+</section>
+
+<!-- ===== What to expect ===== -->
+<section class="a-expect">
+    <div class="a-text">
+        <span class="eyebrow small">WHAT TO EXPECT</span>
+        <h2 class="sec-h2">Your first visit</h2>
+        <p>Come to the Ministries Building in Adum, go up to the third floor and ask for us. You do not need an appointment to ask a question, though calling ahead helps us give you proper time.</p>
+        <p>Bring whatever papers you have: a lease or sale agreement, a court notice, a police report, receipts, letters, even screenshots of messages. If you have nothing yet, come anyway. We will listen first, ask questions, and then tell you what we think the next step should be.</p>
+        <p>If we are the right people to help, we will explain how we would handle your matter, how long it might take and what it will cost, in writing if you prefer. If we are not, we will tell you that too, and where possible point you in the right direction.</p>
+        <p>You do not have to decide on the spot. Take the information home, talk to your family, and come back when you are ready.</p>
+        <p class="small-print">The articles and laws mentioned on this website are general information, not advice on your particular case.</p>
+    </div>
+    <figure class="a-photo">
+        <img src="{{ url_for('static', filename='img/image5.jpg') }}" alt="Gavel and law books in a library">
+    </figure>
+</section>
+
+<!-- ===== Call to action ===== -->
+<section class="a-cta">
+    <h2>Have a legal question? Start with a conversation.</h2>
+    <p>The first consultation is free. Call us, email us or walk in.</p>
+    <div class="visit-buttons">
+        <a class="btn btn-gold" href="tel:+233538274804"><svg class="ic"><use href="#i-phone"/></svg> +233 53 827 4804</a>
+        <a class="btn btn-outline" href="mailto:p6301621@gmail.com">p6301621@gmail.com</a>
+    </div>
+</section>
+{% endblock %}

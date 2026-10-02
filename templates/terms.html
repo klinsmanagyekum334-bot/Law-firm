@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Terms &amp; Conditions | Prince K.N Okyere Law Firm{% endblock %}
+{% block content %}
+<section class="page-banner" style="--bg: url('{{ url_for('static', filename='img/image4.jpeg') }}')">
+    <div class="page-banner-inner"><span class="eyebrow">LEGAL</span><h1>Terms &amp; Conditions</h1></div>
+</section>
+<section class="legal">
+    <p class="updated">Last updated: 2026</p>
+    <p>Welcome to the website of Prince K.N Okyere Law Firm. By using this website you agree to the terms below. If you do not agree with them, please do not use the site.</p>
+
+    <h2>1. General information only</h2>
+    <p>Everything on this website, including the descriptions of laws, rights and legal processes, is general information. It is not legal advice and should not be relied on as a substitute for speaking to a lawyer about your own situation. Laws change, and every case has its own facts.</p>
+
+    <h2>2. No lawyer-client relationship from the website</h2>
+    <p>Visiting this site, sending us an email, messaging us on WhatsApp or calling our number does not by itself make us your lawyers. A lawyer-client relationship begins only when we have agreed to act for you and the terms of our work, including our fees, have been confirmed with you. Please do not send us sensitive documents or details before then unless we ask.</p>
+
+    <h2>3. Testimonials and results</h2>
+    <p>Any experience shared by a client on this site reflects that person's own matter. Every case is different, and past results do not guarantee a similar outcome in future.</p>
+
+    <h2>4. Our content</h2>
+    <p>The text, images, logo and design on this website belong to the firm or are used with permission. You may read and share links to our pages, but you may not copy, sell or republish our content without our written permission.</p>
+
+    <h2>5. Links to other websites</h2>
+    <p>We may link to other websites, such as Google Maps or WhatsApp. We do not control those sites and are not responsible for their content or how they handle your information.</p>
+
+    <h2>6. Limits of responsibility</h2>
+    <p>We try to keep the information on this site accurate and up to date, but we do not promise that it is complete or free from errors. To the extent the law allows, we are not responsible for any loss that results from relying on the website alone.</p>
+
+    <h2>7. Changes to these terms</h2>
+    <p>We may update these terms from time to time. The date at the top shows when they were last changed. Continuing to use the site means you accept the updated terms.</p>
+
+    <h2>8. Governing law</h2>
+    <p>These terms are governed by the laws of the Republic of Ghana, and any dispute about them falls under the jurisdiction of the Ghanaian courts.</p>
+
+    <h2>9. Contact</h2>
+    <p>Questions about these terms? Email <a href="mailto:p6301621@gmail.com">p6301621@gmail.com</a> or call <a href="tel:+233538274804">+233 53 827 4804</a>.</p>
+    <p><a href="{{ url_for('privacy') }}">Read our Privacy &amp; Client Confidentiality notice &rarr;</a></p>
+</section>
+{% endblock %}
