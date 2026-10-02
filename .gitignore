@@ -1,0 +1,22 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Local data (no longer needed with Supabase)
+data.json
+
+# Uploaded images (Supabase handles these now)
+static/uploads/
+
+# Editor
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+*.log
