@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Manager Dashboard | No Delay Glass{% endblock %}
+
+{% block content %}
+<style>
+    .dash-container { max-width: 800px; margin: 3rem auto; padding: 0 1rem; }
+    .dash-header { text-align: center; margin-bottom: 3rem; }
+    .dash-header h2 { font-size: 2rem; color: #0f172a; }
+    .dash-header p { color: #64748b; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .dash-card { background: white; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #0f766e; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: transform 0.2s; }
+    .dash-card:hover { transform: translateY(-3px); }
+    .dash-card h3 { color: #0f172a; margin-bottom: 0.5rem; }
+    .dash-card p { color: #64748b; font-size: 0.9rem; }
+    .logout-btn { display: block; text-align: center; margin-top: 2rem; color: #991b1b; text-decoration: none; font-weight: 600; }
+</style>
+
+<div class="dash-container">
+    <div class="dash-header">
+        <h2>Manager Dashboard</h2>
+        <p>Logged in as: {{ session.get('username') }}</p>
+    </div>
+
+    <div class="dash-grid">
+        <a href="{{ url_for('manager_pending') }}" class="dash-card">
+            <h3>Pending Approvals</h3>
+            <p>Approve new workers who signed up.</p>
+        </a>
+        
+        <a href="{{ url_for('manager_home') }}" class="dash-card">
+            <h3>Edit Home Page</h3>
+            <p>Change text and images on the main page.</p>
+        </a>
+        
+        <a href="{{ url_for('manager_workers') }}" class="dash-card">
+            <h3>View Workers</h3>
+            <p>See all approved workers.</p>
+        </a>
+        
+        <a href="{{ url_for('manager_change_password') }}" class="dash-card">
+            <h3>Change Password</h3>
+            <p>Update the manager login password.</p>
+        </a>
+    </div>
+
+    <a href="{{ url_for('logout') }}" class="logout-btn">Log Out</a>
+</div>
+{% endblock %}

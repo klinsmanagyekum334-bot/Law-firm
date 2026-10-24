@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Log In | No Delay Glass{% endblock %}
+
+{% block content %}
+<style>
+    .login-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem 1.5rem;
+        min-height: 70vh;
+    }
+
+    .login-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 400px;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        border-top: 5px solid #0f766e;
+    }
+
+    .login-card h2 {
+        text-align: center;
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+    }
+
+    .login-card p {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.85rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #0f766e;
+        box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.9rem;
+        background-color: #0f766e;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+        background-color: #115e59;
+    }
+
+    .flash-message {
+        padding: 0.75rem;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+    .flash-error { background-color: #fee2e2; color: #991b1b; }
+    .flash-success { background-color: #dcfce7; color: #166534; }
+</style>
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <h2>Welcome Back</h2>
+        <p>Please enter your credentials to log in.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {% if category == 'error' %}flash-error{% else %}flash-success{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+
+            <button type="submit" class="btn-submit">Log In</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

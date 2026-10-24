@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% block title %}Worker Dashboard | No Delay Glass{% endblock %}
+
+{% block content %}
+<style>
+    .dash-wrapper {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .header-card {
+        background: #ffffff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        text-align: center;
+        margin-bottom: 2rem;
+        border-top: 5px solid #0f766e;
+    }
+
+    .header-card h2 { color: #0f172a; margin-bottom: 0.25rem; font-size: 1.5rem; }
+    .header-card p { color: #64748b; font-size: 0.9rem; margin-bottom: 1rem; }
+    .live-time { font-family: monospace; font-size: 1.2rem; color: #0f766e; font-weight: bold; }
+
+    .clock-btn {
+        width: 100%;
+        padding: 1.2rem;
+        border-radius: 12px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.2s;
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .clock-btn:active { transform: scale(0.98); }
+    .btn-in { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+    .btn-out { background: #ef4444; color: white; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+
+    .history-card {
+        background: #ffffff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-bottom: 2rem;
+    }
+    .history-card h3 { color: #0f172a; margin-bottom: 1rem; font-size: 1.2rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+    
+    .shift-item { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+    .shift-item:last-child { border-bottom: none; }
+    .shift-in { color: #10b981; font-weight: 600; }
+    .shift-out { color: #ef4444; font-weight: 600; }
+
+    .action-links { display: flex; gap: 1rem; justify-content: center; }
+    .action-links a { text-decoration: none; font-weight: 600; color: #0f766e; padding: 0.5rem 1rem; border: 1px solid #0f766e; border-radius: 6px; font-size: 0.9rem; }
+    .action-links a:hover { background: #f0fdf4; }
+
+    /* Modal Styles */
+    .modal-overlay {
+        display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(15, 23, 42, 0.8); z-index: 1000;
+        align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-content {
+        background: white; padding: 2rem; border-radius: 14px;
+        width: 100%; max-width: 400px; text-align: center;
+    }
+    .modal-content h3 { margin-bottom: 0.5rem; color: #0f172a; }
+    .modal-content p { color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    
+    .camera-preview { width: 100%; height: 200px; background: #000; border-radius: 10px; object-fit: cover; margin-bottom: 1rem; display: none; }
+    .capture-btn { background: #0f766e; color: white; padding: 0.8rem; border: none; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-bottom: 0.5rem; }
+    .skip-btn { background: #f1f5f9; color: #334155; padding: 0.8rem; border: none; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
+    .hidden-canvas { display: none; }
+</style>
+
+<div class="dash-wrapper">
+    
+    <!-- Header -->
+    <div class="header-card">
+        <!-- Profile Picture Logic -->
+        <div style="margin-bottom: 1rem;">
+            {% if user_image %}
+                <img src="{{ url_for('static', filename='uploads/' ~ user_image) }}" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #0f766e;">
+            {% else %}
+                <!-- Default Icon -->
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: #e2e8f0; display: inline-flex; align-items: center; justify-content: center; border: 3px solid #0f766e;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+            {% endif %}
+        </div>
+        
+        <h2>Welcome, {{ session.username }}</h2>
+        <p>{{ current_date }}</p>
+        <div class="live-time" id="liveClock">00:00:00</div>
+    </div>
+
+    <!-- Clock In/Out Button -->
+    {% if active_shift %}
+        <button class="clock-btn btn-out" onclick="clockOut()">
+            🕒 Clock Out (Since {{ active_shift.clock_in.split(' ')[1][:5] }})
+        </button>
+    {% else %}
+        <!-- FIXED: Calls the location check function -->
+        <button class="clock-btn btn-in" onclick="checkLocationAndStart()">
+            🕒 Clock In
+        </button>
+    {% endif %}
+
+    <!-- Today's History -->
+    <div class="history-card">
+        <h3>Today's Activity</h3>
+        {% if today_shifts %}
+            {% for shift in today_shifts %}
+            <div class="shift-item">
+                <div>
+                    <span class="shift-in">In:</span> {{ shift.clock_in.split(' ')[1] }}
+                    <br>
+                    <span class="shift-out">Out:</span> 
+                    {% if shift.clock_out %}
+                        {{ shift.clock_out.split(' ')[1] }}
+                    {% else %}
+                        Working...
+                    {% endif %}
+                </div>
+                <div style="font-size: 0.75rem; color: #94a3b8; text-align: right;">
+                    {{ shift.location[:20] }}...
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: #94a3b8; text-align: center; padding: 1rem 0;">No shifts recorded today.</p>
+        {% endif %}
+    </div>
+
+    <!-- Settings -->
+    <div class="action-links">
+        <a href="{{ url_for('worker_change_password') }}">Change Password</a>
+        <a href="{{ url_for('logout') }}" style="color: #991b1b; border-color: #991b1b;">Log Out</a>
+    </div>
+</div>
+
+<!-- CLOCK IN MODAL (Location & Camera) -->
+<div class="modal-overlay" id="clockInModal">
+    <div class="modal-content">
+        <h3>Confirm Clock In</h3>
+        <p id="stepText">Step 1: Getting your location...</p>
+        
+        <video id="cameraStream" class="camera-preview" autoplay playsinline></video>
+        <canvas id="photoCanvas" class="hidden-canvas"></canvas>
+        
+        <button class="capture-btn" id="captureBtn" style="display:none;" onclick="capturePhoto()">📸 Take Selfie</button>
+        <button class="skip-btn" id="skipBtn" style="display:none;" onclick="submitClockIn('')">Skip Selfie & Clock In</button>
+        <button class="capture-btn" id="submitBtn" style="display:none;" onclick="submitClockIn(document.getElementById('photoCanvas').toDataURL('image/jpeg', 0.7))">✅ Done & Clock In</button>
+    </div>
+</div>
+
+<script>
+    // 1. Live Clock
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('liveClock').innerText = now.toLocaleTimeString();
+    }, 1000);
+
+    let currentLocation = "";
+
+    // 2. SMART LOCATION CHECK (Before opening the modal)
+    function checkLocationAndStart() {
+        // Quick check to see if location is enabled
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                // Location is ON. Open modal and start camera
+                document.getElementById('clockInModal').style.display = 'flex';
+                document.getElementById('stepText').innerText = "Location captured! Step 2: Take a Selfie";
+                
+                currentLocation = `Lat: ${position.coords.latitude.toFixed(5)}, Lng: ${position.coords.longitude.toFixed(5)}`;
+                
+                document.getElementById('skipBtn').style.display = 'block';
+                startCamera();
+            },
+            (error) => {
+                // Location is OFF or Blocked
+                if (error.code === 1) {
+                    alert("Please allow location access in your browser to clock in.");
+                } else if (error.code === 2) {
+                    alert("Please turn on your phone's GPS/Location to clock in.");
+                } else {
+                    alert("Location is taking too long. Please ensure your GPS is on and try again.");
+                }
+            },
+            { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
+    }
+
+    // 3. Camera Logic
+    let stream = null;
+
+    function startCamera() {
+        const video = document.getElementById('cameraStream');
+        video.style.display = 'block';
+        document.getElementById('captureBtn').style.display = 'block';
+
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(s => {
+                stream = s;
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.log("Camera denied or unavailable", err);
+                document.getElementById('captureBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'block';
+            });
+    }
+
+    function capturePhoto() {
+        const video = document.getElementById('cameraStream');
+        const canvas = document.getElementById('photoCanvas');
+        
+        // Resize image to max 600px to make it load instantly
+        const MAX_WIDTH = 600;
+        let width = video.videoWidth;
+        let height = video.videoHeight;
+        
+        if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(video, 0, 0, width, height);
+        
+        if (stream) { stream.getTracks().forEach(track => track.stop()); }
+        
+        document.getElementById('cameraStream').style.display = 'none';
+        document.getElementById('captureBtn').style.display = 'none';
+        document.getElementById('skipBtn').style.display = 'none';
+        document.getElementById('submitBtn').style.display = 'block';
+        document.getElementById('stepText').innerText = "Selfie captured! Ready to clock in.";
+    }
+
+    // 4. Submit to Server
+    function submitClockIn(selfieBase64) {
+        if (stream) { stream.getTracks().forEach(track => track.stop()); }
+        
+        document.getElementById('submitBtn').innerText = "Saving...";
+
+        fetch('/api/clock-in', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ location: currentLocation, selfie: selfieBase64 })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Server error");
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.error);
+                document.getElementById('submitBtn').innerText = "✅ Done & Clock In"; 
+            }
+        })
+        .catch(err => {
+            alert("Connection failed. Check your internet and try again.");
+            document.getElementById('submitBtn').innerText = "✅ Done & Clock In";
+        });
+    }
+
+    // 5. Clock Out Logic
+    function clockOut() {
+        if(confirm("Are you sure you want to clock out?")) {
+            fetch('/api/clock-out', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) { window.location.reload(); }
+            });
+        }
+    }
+</script>
+{% endblock %}

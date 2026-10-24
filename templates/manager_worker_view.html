@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block title %}Worker Profile | No Delay Glass{% endblock %}
+
+{% block content %}
+<style>
+    .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+    .back-link { display: inline-block; margin-bottom: 1rem; color: #0f766e; text-decoration: none; font-weight: 600; }
+    
+    .split-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+    @media (max-width: 768px) { .split-layout { grid-template-columns: 1fr; } }
+
+    .info-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
+    .info-card h3 { color: #0f172a; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.1rem; }
+    
+    .detail-row { margin-bottom: 0.8rem; font-size: 0.95rem; color: #334155; }
+    .detail-row strong { color: #0f172a; display: inline-block; width: 100px; }
+    
+    .password-mask { font-family: monospace; letter-spacing: 2px; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+    .toggle-btn { background: none; border: none; color: #0f766e; cursor: pointer; font-weight: bold; font-size: 0.8rem; text-decoration: underline; margin-left: 0.5rem; }
+
+    .danger-zone { background: #fff1f2; border: 1px solid #fecdd3; padding: 1rem; border-radius: 8px; }
+    .danger-zone h4 { color: #991b1b; margin-bottom: 0.5rem; }
+    .btn-danger { background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; margin-bottom: 0.5rem; }
+    .btn-danger:hover { background: #dc2626; }
+    
+    .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .filter-bar input { padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 6px; flex: 1; }
+    .filter-bar button { padding: 0.6rem 1rem; background: #0f766e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    
+    .history-table { width: 100%; border-collapse: collapse; }
+    .history-table th { text-align: left; padding: 0.8rem; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.85rem; }
+    .history-table td { padding: 0.8rem; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #334155; vertical-align: top; }
+    .history-table tr:hover { background: #f8fafc; }
+    
+    .loc-link { color: #0f766e; text-decoration: underline; cursor: pointer; }
+    .text-danger { color: #ef4444; font-weight: bold; }
+
+    .selfie-thumb { 
+        width: 60px; 
+        height: 60px; 
+        border-radius: 8px; 
+        object-fit: cover; 
+        border: 2px solid #e2e8f0; 
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .selfie-thumb:hover { transform: scale(1.1); border-color: #0f766e; }
+</style>
+
+<div class="container">
+    <a href="{{ url_for('manager_workers') }}" class="back-link">← Back to Workers</a>
+
+    <div class="split-layout">
+        <!-- LEFT SIDE: PERSONAL DETAILS -->
+        <div>
+            <div class="info-card">
+                <h3>Personal Details</h3>
+                
+                <!-- Profile Picture Logic -->
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    {% if worker.image %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ worker.image) }}" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #0f766e;">
+                    {% else %}
+                        <!-- Default Icon -->
+                        <div style="width: 100px; height: 100px; border-radius: 50%; background: #e2e8f0; display: inline-flex; align-items: center; justify-content: center; border: 3px solid #0f766e;">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="detail-row"><strong>Full Name:</strong> {{ worker.full_name or 'N/A' }}</div>
+                <div class="detail-row"><strong>Username:</strong> {{ worker.username }}</div>
+                <div class="detail-row">
+                    <strong>Password:</strong> 
+                    <span class="password-mask" id="passText">••••••••</span>
+                    <button class="toggle-btn" onclick="togglePass('{{ worker.password }}')">Show</button>
+                </div>
+                <div class="detail-row"><strong>Role:</strong> {{ worker.role|capitalize }}</div>
+                <div class="detail-row"><strong>Phone:</strong> {{ worker.phone or 'N/A' }}</div>
+            </div>
+
+            <!-- ONLY MANAGERS CAN DELETE -->
+            {% if session.get('role') in ['MANAGER', 'MASTER'] %}
+            <div class="danger-zone">
+                <h4>Danger Zone</h4>
+                <form method="POST" onsubmit="return confirmDelete(event, 'Are you sure you want to delete ALL work history for this worker?');">
+                    <input type="hidden" name="action" value="delete_history">
+                    <input type="hidden" name="password" class="delete-pass">
+                    <button type="submit" class="btn-danger">Delete Work History Only</button>
+                </form>
+                <form method="POST" onsubmit="return confirmDelete(event, 'Are you sure you want to DELETE THIS WORKER entirely? This deletes all their history and account.');">
+                    <input type="hidden" name="action" value="delete_worker">
+                    <input type="hidden" name="password" class="delete-pass">
+                    <button type="submit" class="btn-danger" style="background: #991b1b;">Delete Worker & All Records</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- RIGHT SIDE: CLOCK IN DETAILS -->
+        <div>
+            <div class="info-card">
+                <h3>Clock In Details</h3>
+                
+                <!-- Date Filter -->
+                <form method="GET" class="filter-bar">
+                    <input type="date" name="date" value="{{ date_filter }}">
+                    <button type="submit">Filter</button>
+                    <a href="{{ url_for('manager_worker_view', user_id=worker.id) }}" style="padding: 0.6rem; color: #64748b; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center;">Clear</a>
+                </form>
+
+                <div style="overflow-x: auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Clock In / Out</th>
+                                <th>Location</th>
+                                <th>Selfie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for shift in history %}
+                            <tr>
+                                <td>{{ shift.clock_in.split(' ')[0] }}</td>
+                                <td>
+                                    <span style="color: #10b981; font-weight: 600;">{{ shift.clock_in.split(' ')[1] }}</span>
+                                    /
+                                    {% if shift.clock_out %}
+                                        <span style="color: #ef4444; font-weight: 600;">{{ shift.clock_out.split(' ')[1] }}</span>
+                                    {% else %}
+                                        <span class="text-danger">Still working</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if shift.location %}
+                                        <!-- Link opens Google Maps -->
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ shift.location.replace('Lat: ', '').replace('Lng: ', '').replace(', ', ',') }}" target="_blank" class="loc-link">
+                                            {{ shift.location_name or 'View Map' }}
+                                        </a>
+                                        <br>
+                                        <span style="font-size: 0.75rem; color: #94a3b8;">{{ shift.location }}</span>
+                                    {% else %}
+                                        <span style="color: #94a3b8;">No Location</span>
+                                    {% endif %}
+                                </td>
+                                <!-- SELFIE COLUMN -->
+                                <td>
+                                    {% if shift.selfie %}
+                                        <a href="{{ url_for('static', filename='uploads/' ~ shift.selfie) }}" target="_blank">
+                                            <img src="{{ url_for('static', filename='uploads/' ~ shift.selfie) }}" class="selfie-thumb" alt="Selfie">
+                                        </a>
+                                    {% else %}
+                                        <span style="color: #94a3b8; font-size: 0.8rem;">None</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #94a3b8; padding: 2rem;">No records found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePass(realPass) {
+        const span = document.getElementById('passText');
+        const btn = span.nextElementSibling;
+        if (span.innerText === '••••••••') {
+            span.innerText = realPass;
+            btn.innerText = 'Hide';
+        } else {
+            span.innerText = '••••••••';
+            btn.innerText = 'Show';
+        }
+    }
+
+    function confirmDelete(event, msg) {
+        const pass = prompt(msg + "\n\nEnter Manager Password to confirm:");
+        if (pass === null) return false;
+        
+        const form = event.target;
+        form.querySelector('.delete-pass').value = pass;
+        return true;
+    }
+</script>
+{% endblock %}

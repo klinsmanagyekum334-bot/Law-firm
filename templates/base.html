@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}No Delay Glass{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            background: #f8fafc; 
+            color: #0f172a; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        header { 
+            background: #0f172a; 
+            color: white; 
+            padding: 1rem 1.5rem; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 4px solid #0f766e;
+        }
+        header h1 { 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 1.4rem; 
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+        .logo-dot { color: #0f766e; }
+
+        /* Footer Styles */
+        footer { 
+            background: #0f172a; 
+            color: #cbd5e1; 
+            padding: 1.5rem; 
+            text-align: center; 
+            margin-top: auto; 
+            font-size: 0.85rem;
+            border-top: 1px solid #1e293b;
+        }
+        .footer-dev-text {
+            margin-top: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Global Utility */
+        main { flex: 1; }
+        a { text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>No Delay Glass<span class="logo-dot">.</span></h1>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 No Delay Glass. All rights reserved.</p>
+        <!-- Fixed Developer Text -->
+        <p class="footer-dev-text">Developed by Ophyser - 0240044138</p>
+    </footer>
+</body>
+</html>

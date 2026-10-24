@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Welcome | No Delay Glass{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        padding: 4rem 1.5rem;
+        text-align: center;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .hero-inner {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .hero h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 3rem;
+        color: #0f172a;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -1px;
+    }
+    .hero p {
+        font-size: 1.15rem;
+        color: #475569;
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Buttons */
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn {
+        display: inline-block;
+        padding: 0.9rem 2.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    .btn-primary {
+        background: #0f766e;
+        color: white;
+        box-shadow: 0 4px 15px rgba(15, 118, 110, 0.3);
+        border: 2px solid #0f766e;
+    }
+    .btn-primary:hover {
+        background: #115e59;
+        border-color: #115e59;
+        transform: translateY(-2px);
+    }
+    .btn-secondary {
+        background: white;
+        color: #0f766e;
+        border: 2px solid #cbd5e1;
+    }
+    .btn-secondary:hover {
+        border-color: #0f766e;
+        background: #f0fdf4;
+        transform: translateY(-2px);
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+        padding: 4rem 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .gallery-title {
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        color: #0f172a;
+        font-size: 1.8rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .gallery-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gallery-img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    @media (max-width: 768px) {
+        .hero h2 { font-size: 2.2rem; }
+        .hero { padding: 3rem 1rem; }
+        .image-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero">
+    <div class="hero-inner">
+        <h2>{{ content.title }}</h2>
+        <p>{{ content.description }}</p>
+
+        <div class="btn-group">
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Log In</a>
+            <a href="{{ url_for('signup') }}" class="btn btn-secondary">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<!-- Gallery Section -->
+{% if content.image_1 or content.image_2 or content.image_3 or content.image_4 or content.image_5 %}
+<div class="gallery-section">
+    <h3 class="gallery-title">Our Recent Work</h3>
+    <div class="image-grid">
+        {% for i in range(1, 6) %}
+            {% set img_key = 'image_' ~ i %}
+            {% if content[img_key] %}
+                <img src="{{ url_for('static', filename='uploads/' ~ content[img_key]) }}" class="gallery-img" alt="Gallery Image {{ i }}">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
