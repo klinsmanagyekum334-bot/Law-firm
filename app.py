@@ -15,10 +15,10 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 # MYSQL CONFIG (Connected to your VPS)
 # ============================================================
 DB_CONFIG = {
-    "host": "162.35.19.36",
-    "user": "canteen_user",
-    "password": "Klinsman@ophyser1", 
-    "database": "canteen_db"
+    "host": os.environ.get("DB_HOST", "162.35.19.36"),
+    "user": os.environ.get("DB_USER", "canteen_user"),
+    "password": os.environ.get("DB_PASSWORD", "Klinsman@ophyser1"), 
+    "database": os.environ.get("DB_NAME", "nodelayglass_db")
 }
 
 # ============================================================
